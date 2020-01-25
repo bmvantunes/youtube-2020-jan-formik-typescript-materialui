@@ -35,3 +35,33 @@ To integrate with material-ui
 ```sh
 npm install --save @material-ui/core
 ```
+
+### Backend interface
+
+```ts
+export interface InvestmentDetails {
+  // minChars = 2, maxChars = 30
+  fullName: string;
+
+  // initial investment, min=100 euros
+  initialInvestment: number;
+
+  // investment risk the client wants to take
+  // show 3 Checkboxes - "High", "Medium", "Low"
+  // at least one is mandatory
+  investmentRisk: Array<'High' | 'Medium' | 'Low'>;
+
+  // this field is dependent on investmentRisk
+  // It is mandatory only if the client selects
+  // High investmentRisk
+  // textarea = minChars = 20, max=100
+  commentAboutInvestmentRisk: string;
+
+  // min=1 address, max=5
+  // each address at least 10 characters, max = 100
+  addresses: string[];
+
+  // the user has to accept the terms and conditions
+  acceptedTermsAndConditions: boolean;
+}
+```

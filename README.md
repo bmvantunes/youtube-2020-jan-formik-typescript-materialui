@@ -45,10 +45,7 @@ export interface InvestmentDetails {
 
   // initial investment, min=100 euros
   initialInvestment: number;
-
-  // radio button mandatory
-  dividentsPaymentSchedule: 'anually' | 'monthly';
-
+  
   // investment risk the client wants to take
   // show 3 Checkboxes - "High", "Medium", "Low"
   // at least one is mandatory
@@ -60,10 +57,6 @@ export interface InvestmentDetails {
   // textarea = minChars = 20, max=100
   commentAboutInvestmentRisk: string;
 
-  // min=1 address, max=5
-  // each address at least 10 characters, max = 100
-  addresses: string[];
-
   // select field starting with Select...
   // number of dependents is mandatory from 0 up to 5
   dependents: number;
@@ -71,4 +64,16 @@ export interface InvestmentDetails {
   // the user has to accept the terms and conditions
   acceptedTermsAndConditions: boolean;
 }
+```
+
+Initial Values:
+```ts
+const initialValues: InvestmentDetails = {
+  fullName: '',
+  initialInvestment: undefined,
+  investmentRisk: [],
+  commentAboutInvestmentRisk: '',
+  dependents: -1,
+  acceptedTermsAndConditions: false
+};
 ```

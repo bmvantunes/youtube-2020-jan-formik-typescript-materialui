@@ -1,5 +1,5 @@
-import { Card, CardContent, Typography } from '@material-ui/core';
-import { Field, Form, Formik } from 'formik';
+import { Box, Card, CardContent, Checkbox, CheckboxProps, FormControlLabel, FormGroup, MenuItem, TextField, Typography } from '@material-ui/core';
+import { Field, Form, Formik, useField } from 'formik';
 import React from 'react';
 import { InvestmentDetails } from './InvestmentDetails';
 
@@ -21,25 +21,82 @@ export function FormDemo() {
         <Formik initialValues={initialValues} onSubmit={() => {}}>
           {({ values }) => (
             <Form>
-              <Field name="fullName" />
-              <Field name="initialInvestment" type="number" />
+              <Box marginBottom={2}>
+                <FormGroup>
+                  <Field name="fullName" as={TextField} label="Full Name" />
+                </FormGroup>
+              </Box>
 
-              <Field name="investmentRisk" value="High" type="checkbox" />
-              <Field name="investmentRisk" value="Medium" type="checkbox" />
-              <Field name="investmentRisk" value="Low" type="checkbox" />
+              <Box marginBottom={2}>
+                <FormGroup>
+                  <Field
+                    name="initialInvestment"
+                    type="number"
+                    as={TextField}
+                    label="Initial Investment"
+                  />
+                </FormGroup>
+              </Box>
 
-              <Field name="commentAboutInvestmentRisk" as="textarea" />
+              <Box marginBottom={2}>
+                <label>Select the risk you want to take:</label>
+                <FormGroup>
+                  <MyCheckbox
+                    name="investmentRisk"
+                    value="High"
+                    label="High - Super Risky"
+                  />
+                  <MyCheckbox
+                    name="investmentRisk"
+                    value="Medium"
+                    label="Medium - Risky"
+                  />
+                  <MyCheckbox
+                    name="investmentRisk"
+                    value="Low"
+                    label="Low - Safe"
+                  />
+                </FormGroup>
+              </Box>
+              <Box marginBottom={2}>
+                <FormGroup>
+                  <Field
+                    name="commentAboutInvestmentRisk"
+                    as={TextField}
+                    multiline
+                    rows={3}
+                    rowsMax={10}
+                    label="Comment About Investment Risk"
+                  />
+                </FormGroup>
+              </Box>
 
-              <Field name="dependents" as="select">
-                <option value={0}>0</option>
-                <option value={1}>1</option>
-                <option value={2}>2</option>
-                <option value={3}>3</option>
-                <option value={4}>4</option>
-                <option value={5}>5</option>
-              </Field>
+              <Box marginBottom={2}>
+                <FormGroup>
+                  <Field
+                    name="dependents"
+                    label="dependents"
+                    as={TextField}
+                    select
+                  >
+                    <MenuItem value={0}>0</MenuItem>
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem value={5}>5</MenuItem>
+                  </Field>
+                </FormGroup>
+              </Box>
 
-              <Field name="acceptedTermsAndConditions" type="checkbox" />
+              <Box marginBottom={2}>
+                <FormGroup>
+                  <MyCheckbox
+                    name="acceptedTermsAndConditions"
+                    label="Accept terms and conditions"
+                  />
+                </FormGroup>
+              </Box>
 
               <pre>{JSON.stringify(values, null, 4)}</pre>
             </Form>
@@ -47,5 +104,25 @@ export function FormDemo() {
         </Formik>
       </CardContent>
     </Card>
+  );
+}
+
+export interface MyCheckboxProps extends CheckboxProps {
+  name: string;
+  value?: string | number;
+  label?: string;
+}
+
+export function MyCheckbox(props: MyCheckboxProps) {
+  const [field] = useField({
+    name: props.name,
+    type: 'checkbox',
+    value: props.value
+  });
+  return (
+    <FormControlLabel
+      control={<Checkbox {...props} {...field} />}
+      label={props.label}
+    />
   );
 }
